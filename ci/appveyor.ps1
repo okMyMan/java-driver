@@ -133,5 +133,5 @@ Write-Host "Cloning Scassandra"
 Start-Process git -ArgumentList "clone --branch=feature/76 --depth=1 https://github.com/tolbertam/scassandra-server.git scassandra-server" -Wait -nnw
 Write-Host "Building Scassandra"
 Push-Location "scassandra-server"
-Start-Process .\gradlew.bat -ArgumentList "assemble install -x signArchives" -Wait -nnw
+cmd /c gradlew.bat assemble install -x signArchives
 Pop-Location
