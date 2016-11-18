@@ -13,11 +13,14 @@ cassandra:
   - 3.9
 build:
   - script: |
+      . /usr/local/bin/jdk_switcher.sh
+      jdk_switcher use oraclejdk8
       export JAVA_OPTS="-Xmx1024M -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512M"
       export GRADLE_OPTS="-Dorg.gradle.daemon=true"
       git clone -b feature/76 --single-branch "https://github.com/tolbertam/scassandra-server.git"
       cd scassandra-server
       ./gradlew assemble install -x signArchives
+      jdk_switcher use $JAVA_VERSION
   - type: maven
     version: 3.2.5
     goals: verify --fail-never -Plong
