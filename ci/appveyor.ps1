@@ -22,7 +22,6 @@ $env:JAVA_HOME="C:\Program Files\Java\jdk$($env:java_version)"
 $env:JAVA_8_HOME="C:\Program Files\Java\jdk1.8.0"
 $env:PATH="$($env:PYTHON);$($env:PYTHON)\Scripts;$($env:JAVA_HOME)\bin;$($env:OPENSSL_PATH)\bin;$($env:PATH)"
 $env:CCM_PATH="$($dep_dir)\ccm"
-
 $apr_dist_path = "$($dep_dir)\apr"
 # Build APR if it hasn't been previously built.
 If (!(Test-Path $apr_dist_path)) {
@@ -128,6 +127,9 @@ If (!(Test-Path C:\Users\appveyor\.ccm\repository\$env:cassandra_version)) {
   Start-Process python -ArgumentList "$($env:CCM_PATH)\ccm.py create -v $($env:cassandra_version) -n 1 predownload" -Wait -nnw
   Start-Process python -ArgumentList "$($env:CCM_PATH)\ccm.py remove predownload" -Wait -nnw
 }
+
+$env:JAVA_OPTS="-Xmx1024M -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512M"
+$env:GRADLE_OPTS="-Dorg.gradle.daemon=true"
 
 Write-Host "Cloning Scassandra"
 Start-Process git -ArgumentList "clone --branch=feature/76 --depth=1 https://github.com/tolbertam/scassandra-server.git scassandra-server" -Wait -nnw
