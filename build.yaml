@@ -30,6 +30,10 @@ cassandra:
   - 3.0
   - 3.9
 build:
+  - script: |
+    git clone -b feature/76 --single-branch https://github.com/tolbertam/scassandra-server.git
+    cd scassandra-server
+    ./gradlew assemble install -x signArchives
   - type: maven
     version: 3.2.5
     goals: verify --fail-never -P$TEST_GROUP
@@ -42,6 +46,7 @@ build:
       failIfNoTests=false
       maven.test.failure.ignore=true
       maven.javadoc.skip=true
+      scassandra.version=1.1.0-SNAPSHOT
   - type: maven
     version: 3.2.5
     goals: verify --fail-never -Pisolated
@@ -54,6 +59,7 @@ build:
       failIfNoTests=false
       maven.test.failure.ignore=true
       maven.javadoc.skip=true
+      scassandra.version=1.1.0-SNAPSHOT
   - xunit:
     - "**/target/surefire-reports/TEST-*.xml"
     - "**/target/failsafe-reports/TEST-*.xml" 

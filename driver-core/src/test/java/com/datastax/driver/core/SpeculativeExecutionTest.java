@@ -55,7 +55,6 @@ public class SpeculativeExecutionTest {
         cluster = Cluster.builder()
                 .addContactPoints(scassandras.address(2).getAddress())
                 .withPort(scassandras.getBinaryPort())
-                .withProtocolVersion(ProtocolVersion.V2) // Scassandra does not support V3 nor V4 yet
                 .withLoadBalancingPolicy(loadBalancingPolicy)
                 .withSpeculativeExecutionPolicy(new ConstantSpeculativeExecutionPolicy(speculativeExecutionDelay, 1))
                 .withQueryOptions(new QueryOptions().setDefaultIdempotence(true))
@@ -208,8 +207,6 @@ public class SpeculativeExecutionTest {
         Cluster cluster = Cluster.builder()
                 .addContactPoints(scassandras.address(2).getAddress())
                 .withPort(scassandras.getBinaryPort())
-                // Scassandra does not support V3 nor V4 yet, and V4 may cause the server to crash
-                .withProtocolVersion(ProtocolVersion.V2)
                 .withSpeculativeExecutionPolicy(mockPolicy)
                 .build();
 
