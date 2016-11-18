@@ -128,3 +128,10 @@ If (!(Test-Path C:\Users\appveyor\.ccm\repository\$env:cassandra_version)) {
   Start-Process python -ArgumentList "$($env:CCM_PATH)\ccm.py create -v $($env:cassandra_version) -n 1 predownload" -Wait -nnw
   Start-Process python -ArgumentList "$($env:CCM_PATH)\ccm.py remove predownload" -Wait -nnw
 }
+
+Write-Host "Cloning Scassandra"
+Start-Process git -ArgumentList "clone --branch=feature/76 --depth=1 https://github.com/tolbertam/scassandra-server.git scassandra-server" -Wait -nnw
+Write-Host "Building Scassandra"
+Push-Location "scassandra-server"
+Start-Process .\gradlew.bat -ArgumentList "assemble install -x signArchives" -Wait -nnw
+Pop-Location
