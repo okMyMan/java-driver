@@ -31,7 +31,7 @@ cassandra:
   - 3.9
 build:
   - script: |
-    git clone -b feature/76 --single-branch https://github.com/tolbertam/scassandra-server.git
+    git clone -b feature/76 --single-branch https&#58;//github.com/tolbertam/scassandra-server.git
     cd scassandra-server
     ./gradlew assemble install -x signArchives
   - type: maven
