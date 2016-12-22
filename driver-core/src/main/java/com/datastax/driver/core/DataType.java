@@ -503,6 +503,19 @@ public abstract class DataType {
     }
 
     /**
+     * Returns a Duration type, introduced in Cassandra 3.10.
+     * <p/>
+     * Note that a Duration type does not have a native representation in CQL, and
+     * technically, is merely a special {@link DataType#custom(String) custom type}
+     * from the driver's point of view.
+     *
+     * @return the Duration type.
+     */
+    public static DurationType duration() {
+        return DurationType.instance;
+    }
+
+    /**
      * Returns the name of that type.
      *
      * @return the name of that type.
@@ -759,4 +772,16 @@ public abstract class DataType {
             return String.format("'%s'", customClassName);
         }
     }
+
+    /**
+     */
+    public static class DurationType extends CustomType {
+
+        private static final DurationType instance = new DurationType();
+
+        private DurationType() {
+            super(Name.CUSTOM, "org.apache.cassandra.db.marshal.DurationType");
+        }
+    }
+
 }
